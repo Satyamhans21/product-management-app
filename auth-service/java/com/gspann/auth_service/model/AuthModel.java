@@ -9,4 +9,5 @@ public class AuthModel {
 	private String username;
 	private String password;
 
+	private String cPassword;
 }
