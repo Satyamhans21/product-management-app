@@ -6,6 +6,7 @@ import com.gspann.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findByIsDeletedFalse();
     }
 
     @Override
@@ -54,9 +55,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long id) {
-        Product old=productRepository.findById(id).orElseThrow(()->new RuntimeException("Product not found with id: "+id));
-        productRepository.delete(old);
+        Product old = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
+        old.setIsDeleted(true);
+        old.setDeletedDate(LocalDateTime.now());
 
+        productRepository.save(old); // update instead of delete
     }
 }
