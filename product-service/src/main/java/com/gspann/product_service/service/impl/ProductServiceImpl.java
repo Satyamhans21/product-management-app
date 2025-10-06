@@ -5,6 +5,7 @@ import com.gspann.product_service.repository.ProductRepository;
 import com.gspann.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,10 +14,21 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private S3Service s3Service;
     @Override
-    public Product createProduct(Product product) {
-        return productRepository.save(product);
+    public Product createProductWithImage(Product product, MultipartFile image) {
+        try {
+            if (image != null && !image.isEmpty()) {
+                String imageUrl = s3Service.uploadFile(image); // upload to AWS S3
+                product.setImageUrl(imageUrl);
+            }
+            return productRepository.save(product);
+        } catch (Exception e) {
+            throw new RuntimeException("Error uploading product image: " + e.getMessage());
+        }
     }
+
 
     @Override
     public List<Product> getAllProducts() {

@@ -30,4 +30,6 @@ public class Product {
 
     private LocalDateTime deletedDate;
 
+    private String imageUrl;
+
 }
