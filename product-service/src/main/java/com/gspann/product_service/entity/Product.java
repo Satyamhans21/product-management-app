@@ -24,10 +24,12 @@ public class Product {
     private Integer quantity;
     @Column(nullable = false)
     private Double price;
-    private double discountPrice;
-    private boolean isAvailable;
+    private Double discountPrice;
+    private Boolean isAvailable;
     private Boolean isDeleted = false;
 
     private LocalDateTime deletedDate;
+
+    private String imageUrl;
 
 }
