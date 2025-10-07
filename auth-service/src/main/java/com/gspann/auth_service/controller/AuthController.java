@@ -55,6 +55,7 @@ public class AuthController {
 	    return ResponseEntity.ok(new AuthResponse(token));
     }
 	
+//	Ater Logout Token will be deleted from the client-end
 	@PostMapping("/logout")
 	public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
 	    Cookie cookie = new Cookie("token", null);
