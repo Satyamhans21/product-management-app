@@ -55,11 +55,15 @@ public class ProductServiceImpl implements ProductService {
         if (product.getDiscountPrice() != null) {
             old.setDiscountPrice(product.getDiscountPrice());
         }
-        if (product.getDeletedDate() != null) {
-            old.setDeletedDate(product.getDeletedDate());
+
+        if (product.getDeletedDate() == null) {
+            old.setDeletedDate(null);
         }
         if (product.getIsAvailable() != null) {
             old.setIsAvailable(product.getIsAvailable());
+        }
+        if (product.getIsDeleted() != null) {
+            old.setIsDeleted(product.getIsDeleted());
         }
 
         return productRepository.save(old);
